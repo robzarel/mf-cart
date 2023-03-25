@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcart=self.webpackChunkcart||[]).push([[902],{21902:(n,r,e)=>{e.r(r),e.d(r,{mount:()=>c});var t=e(95552),a=e.n(t);const c=n=>{const r=`<div>You have ${a().random.number()} items in your cart</div>`;n.innerHTML=r}}}]);

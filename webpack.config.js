@@ -3,15 +3,10 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPluging = require('webpack/lib/container/ModuleFederationPlugin');
 
-const ID_DEV = process.env.NODE_ENV === 'dev';
+const IS_DEV = process.env.MODE === 'dev';
 
-module.exports = {
-  mode: ID_DEV ? 'development': 'production',
-  output: {
-    filename: '[name].[hash].js',
-    path: path.resolve(__dirname, 'build/static'),
-    publicPath: ID_DEV ? 'static/': 'https://robzarel.github.io/mf-cart/static/'
-  },
+const config = {
+  mode: IS_DEV ? 'development': 'production',
   devServer: {
     port: 8082,
   },
@@ -20,13 +15,24 @@ module.exports = {
       name: 'cart',
       filename: 'remoteEntry.js',
       exposes: {
-        './CartShow': './src/index'
+        './CartShow': './src/bootstrap'
       },
       shared: ['faker']
     }),
     new HtmlWebpackPlugin({
-      filename: '../index.html',
+      filename: IS_DEV ? 'index.html' : '../index.html',
       template: './public/index.html',
     })
   ]
 };
+
+// bugfix: when publicPath is setted to '/' container can't load script
+if (!IS_DEV) {
+  config.output = {
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, 'build/static'),
+    publicPath: 'static/'
+  };
+}
+
+module.exports = config;

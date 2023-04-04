@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcart=self.webpackChunkcart||[]).push([[902],{21902:(e,n,r)=>{r.r(n);var a=r(95552);const t=`<div>You have ${r.n(a)().random.number()} items in your cart</div>`;function c(){alert("bum!")}el.innerHTML=t,window.fdc3?c():window.addEventListener("fdc3Ready",c)}}]);

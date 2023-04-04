@@ -1,12 +1,37 @@
 import faker from 'faker';
 
-const mount = (el) => {
-  const cartText = `<div>You have ${faker.random.number()} items in your cart</div>`;
+const startFdc3 = async () => {
+  // const channel = await window.fdc3.getOrCreateChannel('myChannel')
 
-  el.innerHTML = cartText;  
-};
+  // channel.addContextListener('result', (result) => {
+  //   alert(`${result}`);
+  // });
+  window.VERSION = '1';
+  const root = document.getElementById('dev-cart');
 
-const root = document.getElementById('dev-cart');
-root && mount(root);
+  const cardItems = faker.random.number();
 
-export { mount };
+  const cartText = `You have ${faker.random.number()} items in your cart`;
+
+  const div = document.createElement('div');
+  div.innerHTML = cartText
+  const button = document.createElement('button');
+  button.innerHTML = 'send it to another app'
+  
+  button.addEventListener('click', (event) => {
+    console.log('123');
+    fdc3.raiseIntent('ViewContact', {
+      type: 'fdc3.contact',
+      id: { count: cardItems }
+    });
+  });
+
+  root.appendChild(div);
+  root.appendChild(button);
+}
+
+if (window.fdc3) {
+  startFdc3();
+} else {
+  window.addEventListener('fdc3Ready', startFdc3);
+}
